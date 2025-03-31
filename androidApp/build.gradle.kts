@@ -11,7 +11,8 @@ android {
     compileSdk = 35
     defaultConfig {
         applicationId = "com.nithish.notes.android"
-        minSdk = 24
+        minSdk = 26
+        //noinspection EditedTargetSdkVersion
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -41,4 +42,5 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.android.compiler)
     kapt(libs.hilt.compiler)
+    implementation("com.android.tools:desugar_jdk_libs:2.1.5")
 }

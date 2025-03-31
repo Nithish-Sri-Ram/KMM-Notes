@@ -10,7 +10,7 @@ class SearchNotes {
         }
 
         return notes.filter {
-            it.title.trim().toLowerCase().contains(query.lowercase())
+            it.title.trim().lowercase().contains(query.lowercase())
         }.sortedBy { DateTimeUtil.toEpochMillis(it.created) }
     }
 }

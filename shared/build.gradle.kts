@@ -45,7 +45,7 @@ kotlin {
 
 android {
     namespace = "com.nithish.notes"
-    compileSdk = 35 // Using version from libs.versions.toml
+    compileSdk = 35
     defaultConfig {
         minSdk = 24
     }

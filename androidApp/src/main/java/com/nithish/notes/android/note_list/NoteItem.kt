@@ -33,6 +33,7 @@ fun NoteItem(
     note: Note,
     backgroundColor: Color,
     onNoteClick: ()-> Unit,
+    onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ){
     val formattedDate = remember(note.created) {
@@ -59,8 +60,7 @@ fun NoteItem(
                 contentDescription = "Delete Note",
                 modifier = Modifier
                     .clickable(MutableInteractionSource(),null){
-//                        onDelteClick()
-//                        onDeteeClick()
+                        onDeleteClick
                     }
                 )
         }
