@@ -1,10 +1,11 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinxSerialization)
-    alias(libs.plugins.sqldelight)
+    alias(libs.plugins.kotlinMultiplatform) // Kotlin Multiplatform plugin
+    alias(libs.plugins.androidLibrary) // Android Library plugin
+    alias(libs.plugins.kotlinxSerialization) // Serialization plugin
+    alias(libs.plugins.sqldelight) // SqlDelight plugin
+    id("org.jetbrains.kotlin.kapt") // Kotlin KAPT plugin
 }
 
 kotlin {
@@ -17,21 +18,10 @@ kotlin {
             }
         }
     }
-    
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "shared"
-            isStatic = true
-        }
-    }
 
     sourceSets {
         commonMain.dependencies {
-            //put your multiplatform dependencies here
+            implementation(kotlin("stdlib-common"))
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
@@ -39,24 +29,23 @@ kotlin {
             implementation(libs.runtime)
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
-        }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+            implementation("com.google.dagger:hilt-compiler:2.51.1") { // Manually specifying the version and adding exclusion
+                exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-android")
+            }
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
             implementation(libs.android.driver)
-        }
-        iosMain.dependencies {
-            implementation(libs.ktor.client.darwin)
-            implementation(libs.native.driver)
+            implementation(libs.hilt.android)
+            implementation(libs.hilt.navigation.compose)
+            implementation(libs.kotlinx.datetime)
         }
     }
 }
 
 android {
     namespace = "com.nithish.notes"
-    compileSdk = 35
+    compileSdk = 35 // Using version from libs.versions.toml
     defaultConfig {
         minSdk = 24
     }
