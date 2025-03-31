@@ -8,21 +8,10 @@ pluginManagement {
         mavenCentral()
     }
     plugins {
-        // Add this for Hilt
-        id("com.google.dagger.hilt.android") version "2.51.1"
+        id("com.android.application") version "8.3.2" // Ensure this is correct
     }
 }
 
-
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.51.1") // Use the correct version
-    }
-}
 
 dependencyResolutionManagement {
     repositories {

@@ -13,7 +13,7 @@ kotlin {
         compilations.all {
             compileTaskProvider.configure {
                 compilerOptions {
-                    jvmTarget.set(JvmTarget.JVM_1_8)
+                    jvmTarget.set(JvmTarget.JVM_17)
                 }
             }
         }
@@ -28,16 +28,11 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.runtime)
             implementation(libs.kotlinx.datetime)
-            implementation(libs.koin.core)
-            implementation("com.google.dagger:hilt-compiler:2.51.1") { // Manually specifying the version and adding exclusion
-                exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-android")
-            }
+//            implementation(libs.koin.core)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
             implementation(libs.android.driver)
-            implementation(libs.hilt.android)
-            implementation(libs.hilt.navigation.compose)
             implementation(libs.kotlinx.datetime)
         }
     }
@@ -47,11 +42,20 @@ android {
     namespace = "com.nithish.notes"
     compileSdk = 35
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+    kapt {
+        correctErrorTypes = true  // Ensure this is enabled for KAPT tasks
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    dependencies {
+        implementation("com.android.tools:desugar_jdk_libs:2.1.5")
     }
 }
 

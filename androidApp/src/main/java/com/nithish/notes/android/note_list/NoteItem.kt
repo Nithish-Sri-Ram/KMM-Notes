@@ -39,6 +39,8 @@ fun NoteItem(
     val formattedDate = remember(note.created) {
         DateTimeUtil.formatNoteDate(note.created)
     }
+
+    val interactionSource = remember { MutableInteractionSource() }
     Column (
         modifier = Modifier
             .clip(RoundedCornerShape(5.dp))
@@ -59,9 +61,11 @@ fun NoteItem(
             Icon(imageVector = Icons.Default.Close,
                 contentDescription = "Delete Note",
                 modifier = Modifier
-                    .clickable(MutableInteractionSource(),null){
-                        onDeleteClick
-                    }
+                    .clickable(
+                        interactionSource = interactionSource,
+                        indication = null,
+                        onClick = { onDeleteClick() }  // This was missing the parentheses
+                    )
                 )
         }
         Spacer(modifier = Modifier.height(16.dp))

@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.androidApplication) // Android Application plugin
     alias(libs.plugins.kotlinAndroid) // Kotlin Android plugin
     alias(libs.plugins.compose.compiler) // Compose Compiler plugin
-//    id("com.google.dagger.hilt.android") version "2.51.1"
     id("org.jetbrains.kotlin.kapt")
+    id("com.google.dagger.hilt.android") version "2.51.1"
 }
 
 android {
@@ -20,27 +20,36 @@ android {
     buildFeatures {
         compose = true
     }
+    kapt {
+        correctErrorTypes = true
+        includeCompileClasspath = true
+    }
+    hilt{
+        enableAggregatingTask = false
+    }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+//        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
-}
+    dependencies {
+        implementation(project(":shared"))
+        implementation(libs.compose.ui)
+        implementation(libs.compose.material3)
+        implementation(libs.androidx.activity.compose)
+        implementation(libs.kotlinx.datetime)
+        debugImplementation(libs.compose.ui.tooling)
 
-dependencies {
-    implementation(project(":shared"))
-    implementation(libs.compose.ui)
-    implementation(libs.compose.material3)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.kotlinx.datetime)
-    debugImplementation(libs.compose.ui.tooling)
-
-    // Hilt dependencies
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
-    kapt(libs.hilt.android.compiler)
-    kapt(libs.hilt.compiler)
-    implementation("com.android.tools:desugar_jdk_libs:2.1.5")
+        // Hilt dependencies
+        implementation(libs.hilt.android)
+        implementation(libs.hilt.navigation.compose)
+        kapt(libs.hilt.android.compiler)
+//        annotationProcessor("com.squareup:javapoet:1.13.0")
+//        implementation("com.squareup:javapoet:1.13.0")
+        implementation("com.squareup:javapoet:1.12.0")
+        kapt("com.squareup:javapoet:1.12.0")
+    }
 }
