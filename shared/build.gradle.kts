@@ -48,7 +48,7 @@ android {
         viewBinding = true
     }
     kapt {
-        correctErrorTypes = true  // Ensure this is enabled for KAPT tasks
+        correctErrorTypes = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

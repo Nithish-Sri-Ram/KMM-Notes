@@ -30,7 +30,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-//        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = "17"
@@ -47,8 +46,6 @@ android {
         implementation(libs.hilt.android)
         implementation(libs.hilt.navigation.compose)
         kapt(libs.hilt.android.compiler)
-//        annotationProcessor("com.squareup:javapoet:1.13.0")
-//        implementation("com.squareup:javapoet:1.13.0")
         implementation("com.squareup:javapoet:1.12.0")
         kapt("com.squareup:javapoet:1.12.0")
     }

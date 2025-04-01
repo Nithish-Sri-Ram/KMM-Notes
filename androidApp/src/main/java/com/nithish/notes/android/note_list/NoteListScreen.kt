@@ -28,12 +28,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.lazy.items
-import androidx.compose.ui.graphics.toArgb
-
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NoteListScreen(
+    navController: NavController,
     viewModel: NoteListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsState().value
@@ -45,7 +45,7 @@ fun NoteListScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                // Your action here
+                navController.navigate("note_detail/-1L")
             },
                 Modifier.background(Color.Black)
             ) {
@@ -62,7 +62,6 @@ fun NoteListScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-
             Box(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
@@ -93,12 +92,12 @@ fun NoteListScreen(
                     items = state.notes,
                     key = {it.id!!}
                 ) { note ->
-                    val colorInt = note.colorHex.removePrefix("#").toIntOrNull(16) ?: Color.Black.toArgb() // Default to Black if the parsing fails
+//                    val colorInt = note.colorHex.removePrefix("#").toIntOrNull(16) ?: Color.Black.toArgb() // Default to Black if the parsing fails
                     NoteItem(
                         note = note,
-                        backgroundColor = Color(colorInt),
+                        backgroundColor = Color(note.colorHex),
                         onNoteClick = {
-
+                            navController.navigate("note_detail/${note.id}")
                         },
                         onDeleteClick = {
                             viewModel.deleteNoteById(note.id!!)

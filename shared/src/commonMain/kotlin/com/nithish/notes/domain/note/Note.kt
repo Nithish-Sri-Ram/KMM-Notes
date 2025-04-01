@@ -18,11 +18,13 @@ data class Note(
     @SerialName("content")
     val content: String,
     @SerialName("colorHex")
-    val colorHex:String,
+    val colorHex: Long,
     @SerialName("created")
     val created: LocalDateTime
 ) {
-    private val colors = listOf(RedOrangeHex, RedPinkHex, LightGreenHex, BabyBlueHex, VioletHex)
+    companion object{
+        private val colors = listOf(RedOrangeHex, RedPinkHex, LightGreenHex, BabyBlueHex, VioletHex)
 
-    fun generateRandomColor() = colors.random()
+        fun generateRandomColor() = colors.random()
+    }
 }

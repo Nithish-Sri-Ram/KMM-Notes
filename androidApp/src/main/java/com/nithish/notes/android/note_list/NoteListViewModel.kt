@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.nithish.notes.data.note.SearchNotes
 import com.nithish.notes.domain.note.Note
 import com.nithish.notes.domain.note.NoteDataSource
+import com.nithish.notes.domain.time.DateTimeUtil
+import com.nithish.notes.presentation.RedOrangeHex
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -32,6 +34,22 @@ class NoteListViewModel @Inject constructor(
             isSearchActive
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), NoteListState())
+
+    init {
+        viewModelScope.launch {
+            for (i in 1..10) {
+                noteDataSource.insertNote(
+                    Note(
+                        id = null,
+                        title = "Note$i",
+                        content = "Content$i",
+                        colorHex = RedOrangeHex,
+                        created = DateTimeUtil.now(),
+                    )
+                )
+            }
+        }
+    }
 
     // On any of the below function change - it will be updating the above and it will be saved in a state
     // which can be later used in the compose UI
